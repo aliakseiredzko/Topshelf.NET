@@ -12,6 +12,7 @@
 // specific language governing permissions and limitations under the License.
 namespace Topshelf
 {
+    using ElmahCore;
     using HostConfigurators;
     using Logging;
 
@@ -24,19 +25,11 @@ namespace Topshelf
         ///   Specify that you want to use the Elmah logging engine.
         /// </summary>
         /// <param name="configurator"> </param>
-        public static void UseElmah(this HostConfigurator configurator)
-        {
-            ElmahLogWriterFactory.Use();
-        }
-
-        /// <summary>
-        ///   Specify that you want to use the Elmah logging engine.
-        /// </summary>
-        /// <param name="configurator"> </param>
+        /// <param name="errorLog">Implementation of ErrorLog to use</param>
         /// <param name="logLevels">The desired level of elmah logging</param>
-        public static void UseElmah(this HostConfigurator configurator, ElmahLogLevels logLevels)
+        public static void UseElmah(this HostConfigurator configurator, ErrorLog errorLog, ElmahLogLevels logLevels)
         {
-            ElmahLogWriterFactory.Use(logLevels);
+            ElmahLogWriterFactory.Use(errorLog, logLevels);
         }
     }
 }

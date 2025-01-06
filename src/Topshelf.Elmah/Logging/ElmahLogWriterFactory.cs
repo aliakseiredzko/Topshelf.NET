@@ -13,20 +13,22 @@
 namespace Topshelf.Logging
 {
     using System;
-    using Elmah;
+    using ElmahCore;
 
     public class ElmahLogWriterFactory :
         LogWriterFactory
     {
+        private readonly ErrorLog _errorLog;
         private readonly ElmahLogLevels _logLevels;
-        private ElmahLogWriterFactory(ElmahLogLevels logLevels)
+        private ElmahLogWriterFactory(ErrorLog errorLog, ElmahLogLevels logLevels)
         {
+            _errorLog = errorLog;
             _logLevels = logLevels;
         }
 
         public LogWriter Get(string name)
         {
-            return new ElmahLogWriter(_logLevels);
+            return new ElmahLogWriter(_errorLog, _logLevels);
         }
 
         public void Shutdown()
@@ -34,9 +36,9 @@ namespace Topshelf.Logging
 
         }
 
-        public static void Use(ElmahLogLevels logLevels = null)
+        public static void Use(ErrorLog errorLog, ElmahLogLevels logLevels = null)
         {
-            HostLogger.UseLogger(new ElmahHostLoggerConfigurator(logLevels));
+            HostLogger.UseLogger(new ElmahHostLoggerConfigurator(errorLog, logLevels));
         }
 
 
@@ -44,15 +46,16 @@ namespace Topshelf.Logging
         public class ElmahHostLoggerConfigurator :
             HostLoggerConfigurator
         {
-            private readonly ElmahLogLevels _logLevels;
-            public ElmahHostLoggerConfigurator(ElmahLogLevels logLevels)
+            private readonly ErrorLog _errorLog;
+            private readonly ElmahLogLevels _logLevels;            
+            public ElmahHostLoggerConfigurator(ErrorLog errorLog, ElmahLogLevels logLevels)
             {
                 _logLevels = logLevels;
             }
 
             public LogWriterFactory CreateLogWriterFactory()
             {
-                return new ElmahLogWriterFactory(_logLevels);
+                return new ElmahLogWriterFactory(_errorLog, _logLevels);
             }
         }
     }

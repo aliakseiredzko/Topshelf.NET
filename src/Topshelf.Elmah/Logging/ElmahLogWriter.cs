@@ -14,7 +14,7 @@ namespace Topshelf.Logging
 {
     using System;
     using System.Globalization;
-    using Elmah;
+    using ElmahCore;
     using Topshelf.Logging;
 
     public class ElmahLogLevels
@@ -40,14 +40,6 @@ namespace Topshelf.Logging
     {
         private readonly ErrorLog _log;
         private readonly ElmahLogLevels _logLevels;
-
-        public ElmahLogWriter()
-            : this(ErrorLog.GetDefault(null), null)
-        { }
-
-        public ElmahLogWriter(ElmahLogLevels logLevels)
-            : this(ErrorLog.GetDefault(null), logLevels)
-        { }
 
         public ElmahLogWriter(ErrorLog log, ElmahLogLevels logLevels)
         {
