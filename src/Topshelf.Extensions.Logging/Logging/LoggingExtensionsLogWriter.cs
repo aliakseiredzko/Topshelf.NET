@@ -14,7 +14,7 @@ namespace Topshelf.Logging
 {
     using System;
     using Microsoft.Extensions.Logging;
-    using Microsoft.Extensions.Logging.Internal;
+    using Microsoft.Extensions.Logging.Abstractions;
 
     /// <summary>
     /// Implements a Topshelf <see cref="LogWriter"/> for Microsoft extensions for logging.
@@ -114,7 +114,7 @@ namespace Topshelf.Logging
         /// <param name="level">The level.</param>
         /// <param name="format">The format.</param>
         /// <param name="args">The arguments.</param>
-        public void LogFormat(LoggingLevel level, string format, params object[] args) => this.Log(level, new FormattedLogValues(format, args));
+        public void LogFormat(LoggingLevel level, string format, params object[] args) => this.logger.Log(ToLogLevel(level), format, args);
 
         /// <summary>
         /// Debugs the specified object.

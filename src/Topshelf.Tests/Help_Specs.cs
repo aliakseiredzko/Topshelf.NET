@@ -15,6 +15,7 @@ namespace Topshelf.Tests
     using System;
     using Hosts;
     using NUnit.Framework;
+    using NUnit.Framework.Legacy;
 
     [TestFixture]
     public class Using_the_command_line_help_host
@@ -31,9 +32,9 @@ namespace Topshelf.Tests
                 x.ApplyCommandLine("help");
             });
 
-            Assert.IsInstanceOf<HelpHost>(host);
+            ClassicAssert.IsInstanceOf<HelpHost>(host);
             var helpHost = (HelpHost)host;
-            Assert.AreEqual(prefix, helpHost.PrefixText);
+            ClassicAssert.AreEqual(prefix, helpHost.PrefixText);
         }
 
         [Test]
@@ -45,9 +46,9 @@ namespace Topshelf.Tests
                 x.ApplyCommandLine("help");
             });
 
-            Assert.IsInstanceOf<HelpHost>(host);
+            ClassicAssert.IsInstanceOf<HelpHost>(host);
             var helpHost = (HelpHost)host;
-            Assert.AreEqual(null, helpHost.PrefixText);
+            ClassicAssert.AreEqual(null, helpHost.PrefixText);
         }
 
         [Test]
@@ -62,9 +63,9 @@ namespace Topshelf.Tests
                     x.ApplyCommandLine("help --systemonly");
                 });
 
-            Assert.IsInstanceOf<HelpHost>(host);
+            ClassicAssert.IsInstanceOf<HelpHost>(host);
             var helpHost = (HelpHost)host;
-            Assert.AreEqual(null, helpHost.PrefixText);
+            ClassicAssert.AreEqual(null, helpHost.PrefixText);
         }
 
 
