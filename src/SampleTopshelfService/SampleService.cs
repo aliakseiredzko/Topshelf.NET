@@ -37,27 +37,14 @@ namespace SampleTopshelfService
         {
             _log.Info("SampleService Starting...");
 
-            hostControl.RequestAdditionalTime(TimeSpan.FromSeconds(10));
-
-            Thread.Sleep(1000);
+            hostControl.RequestAdditionalTime(TimeSpan.FromSeconds(10));            
 
             if(_throwOnStart)
             {
                 _log.Info("Throwing as requested");
                 throw new InvalidOperationException("Throw on Start Requested");
             }
-
-            ThreadPool.QueueUserWorkItem(x =>
-                {
-                    Thread.Sleep(3000);
-
-                    if(_throwUnhandled)
-                        throw new InvalidOperationException("Throw Unhandled In Random Thread");
-
-                    _log.Info("Requesting stop");
-
-                    hostControl.Stop();
-                });
+            
             _log.Info("SampleService Started");
 
             return true;
