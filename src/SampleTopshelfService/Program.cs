@@ -15,6 +15,12 @@ namespace SampleTopshelfService
     using System;
     using Serilog;
     using Topshelf;
+    using Topshelf.Builders;
+    using Topshelf.Configurators;
+    using Topshelf.HostConfigurators;
+    using Topshelf.Runtime;
+    using Topshelf.Runtime.DotNetCore;
+    using Topshelf.Runtime.Windows;
 
     class Program
     {
@@ -28,26 +34,29 @@ namespace SampleTopshelfService
                         .CreateLogger();
                     x.UseSerilog();
 
-                    x.UseAssemblyInfoForServiceInfo();
+                    x.UseAssemblyInfoForServiceInfo();                    
 
                     bool throwOnStart = false;
                     bool throwOnStop = false;
-                    bool throwUnhandled = false;
+                    bool throwUnhandled = false;                                                            
+
+                    x.EnablePowerEvents();                   
 
                     x.Service(settings => new SampleService(throwOnStart, throwOnStop, throwUnhandled), s =>
                     {
                         s.BeforeStartingService(_ => Console.WriteLine("BeforeStart"));
                         s.BeforeStoppingService(_ => Console.WriteLine("BeforeStop"));
+                        s.AfterStartingService(_ => Console.WriteLine("AfterStart"));
+                        s.AfterStoppingService(_ => Console.WriteLine("AfterStop"));
                     });
 
                     x.SetStartTimeout(TimeSpan.FromSeconds(10));
-                    x.SetStopTimeout(TimeSpan.FromSeconds(10));
+                    x.SetStopTimeout(TimeSpan.FromSeconds(100));
 
                     x.EnableServiceRecovery(r =>
                         {
                             r.RestartService(3);
-                            r.RunProgram(7, "ping google.com");
-                            r.RestartComputer(5, "message");
+                            r.RunProgram(7, "ping google.com");                            
 
                             r.OnCrashOnly();
                             r.SetResetPeriod(2);
@@ -60,7 +69,7 @@ namespace SampleTopshelfService
                     x.OnException((exception) =>
                     {
                         Console.WriteLine("Exception thrown - " + exception.Message);
-                    });
+                    });                    
                 });
         }
 
@@ -77,6 +86,11 @@ namespace SampleTopshelfService
                             s.WhenStopped(v => v.Stop());
                         });
                 });
+        }
+
+        static EnvironmentBuilder DotnetCoreEnvironmentBuilderFactory(HostConfigurator configurator)
+        {
+            return new DotNetCoreEnvironmentBuilder(configurator);
         }
     }
 }

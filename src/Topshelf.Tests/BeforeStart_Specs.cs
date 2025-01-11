@@ -13,7 +13,7 @@
 namespace Topshelf.Tests
 {
     using NUnit.Framework;
-
+    using NUnit.Framework.Legacy;
 
     [TestFixture]
     public class When_the_service_start_is_canceled
@@ -34,8 +34,8 @@ namespace Topshelf.Tests
                         });
                 });
 
-            Assert.IsFalse(started);
-            Assert.AreEqual(TopshelfExitCode.ServiceControlRequestFailed, exitCode);
+            ClassicAssert.IsFalse(started);
+            ClassicAssert.AreEqual(TopshelfExitCode.ServiceControlRequestFailed, exitCode);
         }
 
 

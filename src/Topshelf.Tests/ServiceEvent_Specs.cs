@@ -13,6 +13,7 @@
 namespace Topshelf.Tests
 {
     using NUnit.Framework;
+    using NUnit.Framework.Legacy;
 
     [TestFixture]
     public class Configuring_service_events
@@ -39,10 +40,10 @@ namespace Topshelf.Tests
                         });
                 });
 
-            Assert.IsTrue(beforeStart);
-            Assert.IsTrue(afterStart);
-            Assert.IsTrue(beforeStop);
-            Assert.IsTrue(afterStop);
+            ClassicAssert.IsTrue(beforeStart);
+            ClassicAssert.IsTrue(afterStart);
+            ClassicAssert.IsTrue(beforeStop);
+            ClassicAssert.IsTrue(afterStop);
         }
 
         [Test]
@@ -67,10 +68,10 @@ namespace Topshelf.Tests
                         });
                 });
 
-            Assert.IsTrue(beforeStart);
-            Assert.IsTrue(afterStart);
-            Assert.IsTrue(beforeStop);
-            Assert.IsTrue(afterStop);
+            ClassicAssert.IsTrue(beforeStart);
+            ClassicAssert.IsTrue(afterStart);
+            ClassicAssert.IsTrue(beforeStop);
+            ClassicAssert.IsTrue(afterStop);
         }
 
         [Test]
@@ -99,10 +100,10 @@ namespace Topshelf.Tests
                         });
                 });
 
-            Assert.IsTrue(beforeStart);
-            Assert.IsTrue(afterStart);
-            Assert.IsTrue(beforeStop);
-            Assert.IsTrue(afterStop);
+            ClassicAssert.IsTrue(beforeStart);
+            ClassicAssert.IsTrue(afterStart);
+            ClassicAssert.IsTrue(beforeStop);
+            ClassicAssert.IsTrue(afterStop);
         }
 
         class MyService : ServiceControl

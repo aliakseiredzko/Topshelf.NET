@@ -15,6 +15,7 @@ namespace Topshelf.Tests
     using System;
     using Hosts;
     using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using Runtime;
 
     [TestFixture]
@@ -29,7 +30,7 @@ namespace Topshelf.Tests
                     x.ApplyCommandLine("install");
                 });
 
-            Assert.IsInstanceOf<InstallHost>(host);
+            ClassicAssert.IsInstanceOf<InstallHost>(host);
         }
         [Test]
         public void Should_create_an_install_host_without_being_case_sensitive()
@@ -40,12 +41,12 @@ namespace Topshelf.Tests
                 x.ApplyCommandLine("Install");
             });
 
-            Assert.IsInstanceOf<InstallHost>(host);
+            ClassicAssert.IsInstanceOf<InstallHost>(host);
         }
         [Test]
         public void Should_throw_an_exception_on_an_invalid_command_line()
         {
-            var exception = Assert.Throws<HostConfigurationException>(() =>
+            var exception = ClassicAssert.Throws<HostConfigurationException>(() =>
                 {
                     HostFactory.New(x =>
                     {
@@ -55,7 +56,7 @@ namespace Topshelf.Tests
                     
                 });
 
-            Assert.IsTrue(exception.Message.Contains("explode"));
+            ClassicAssert.IsTrue(exception.Message.Contains("explode"));
         }
 
         [Test]
@@ -67,10 +68,10 @@ namespace Topshelf.Tests
                     x.ApplyCommandLine("install -servicename \"Joe\"");
                 });
 
-            Assert.IsInstanceOf<InstallHost>(host);
+            ClassicAssert.IsInstanceOf<InstallHost>(host);
             var installHost = (InstallHost)host;
-            Assert.AreEqual("Joe", installHost.Settings.Name);
-            Assert.AreEqual("Joe", installHost.Settings.ServiceName);
+            ClassicAssert.AreEqual("Joe", installHost.Settings.Name);
+            ClassicAssert.AreEqual("Joe", installHost.Settings.ServiceName);
         }
 
         [Test]
@@ -82,10 +83,10 @@ namespace Topshelf.Tests
                 x.ApplyCommandLine("install -servicename Joe");
             });
 
-            Assert.IsInstanceOf<InstallHost>(host);
+            ClassicAssert.IsInstanceOf<InstallHost>(host);
             var installHost = (InstallHost)host;
-            Assert.AreEqual("Joe", installHost.Settings.Name);
-            Assert.AreEqual("Joe", installHost.Settings.ServiceName);
+            ClassicAssert.AreEqual("Joe", installHost.Settings.Name);
+            ClassicAssert.AreEqual("Joe", installHost.Settings.ServiceName);
         }
 
         [Test]
@@ -97,9 +98,9 @@ namespace Topshelf.Tests
                     x.ApplyCommandLine("install -displayname \"Joe\"");
                 });
 
-            Assert.IsInstanceOf<InstallHost>(host);
+            ClassicAssert.IsInstanceOf<InstallHost>(host);
             var installHost = (InstallHost)host;
-            Assert.AreEqual("Joe", installHost.Settings.DisplayName);
+            ClassicAssert.AreEqual("Joe", installHost.Settings.DisplayName);
         }
 
         [Test]
@@ -111,9 +112,9 @@ namespace Topshelf.Tests
                 x.ApplyCommandLine("install -displayname \"Joe\" -instance \"42\"");
             });
 
-            Assert.IsInstanceOf<InstallHost>(host);
+            ClassicAssert.IsInstanceOf<InstallHost>(host);
             var installHost = (InstallHost)host;
-            Assert.AreEqual("Joe (Instance: 42)", installHost.Settings.DisplayName);
+            ClassicAssert.AreEqual("Joe (Instance: 42)", installHost.Settings.DisplayName);
         }
 
         [Test]
@@ -125,9 +126,9 @@ namespace Topshelf.Tests
                 x.ApplyCommandLine("install -displayname Joe -instance 42");
             });
 
-            Assert.IsInstanceOf<InstallHost>(host);
+            ClassicAssert.IsInstanceOf<InstallHost>(host);
             var installHost = (InstallHost)host;
-            Assert.AreEqual("Joe (Instance: 42)", installHost.Settings.DisplayName);
+            ClassicAssert.AreEqual("Joe (Instance: 42)", installHost.Settings.DisplayName);
         }
 
         [Test]
@@ -139,9 +140,9 @@ namespace Topshelf.Tests
                 x.ApplyCommandLine("install -displayname \"Joe (Instance: 42)\" -instance \"42\"");
             });
 
-            Assert.IsInstanceOf<InstallHost>(host);
+            ClassicAssert.IsInstanceOf<InstallHost>(host);
             var installHost = (InstallHost)host;
-            Assert.AreEqual("Joe (Instance: 42)", installHost.Settings.DisplayName);
+            ClassicAssert.AreEqual("Joe (Instance: 42)", installHost.Settings.DisplayName);
         }
 
         [Test]
@@ -153,9 +154,9 @@ namespace Topshelf.Tests
                 x.ApplyCommandLine("install -displayname \"Joe (Instance: 42)\" -instance 42");
             });
 
-            Assert.IsInstanceOf<InstallHost>(host);
+            ClassicAssert.IsInstanceOf<InstallHost>(host);
             var installHost = (InstallHost)host;
-            Assert.AreEqual("Joe (Instance: 42)", installHost.Settings.DisplayName);
+            ClassicAssert.AreEqual("Joe (Instance: 42)", installHost.Settings.DisplayName);
         }
 
         [Test]
@@ -167,9 +168,9 @@ namespace Topshelf.Tests
                     x.ApplyCommandLine("install -description \"Joe is good\"");
                 });
 
-            Assert.IsInstanceOf<InstallHost>(host);
+            ClassicAssert.IsInstanceOf<InstallHost>(host);
             var installHost = (InstallHost)host;
-            Assert.AreEqual("Joe is good", installHost.Settings.Description);
+            ClassicAssert.AreEqual("Joe is good", installHost.Settings.Description);
         }
 
         [Test]
@@ -181,11 +182,11 @@ namespace Topshelf.Tests
                 x.ApplyCommandLine("install -servicename \"Joe\" -instance \"42\"");
             });
 
-            Assert.IsInstanceOf<InstallHost>(host);
+            ClassicAssert.IsInstanceOf<InstallHost>(host);
             var installHost = (InstallHost)host;
-            Assert.AreEqual("Joe", installHost.Settings.Name);
-            Assert.AreEqual("42", installHost.Settings.InstanceName);
-            Assert.AreEqual("Joe$42", installHost.Settings.ServiceName);
+            ClassicAssert.AreEqual("Joe", installHost.Settings.Name);
+            ClassicAssert.AreEqual("42", installHost.Settings.InstanceName);
+            ClassicAssert.AreEqual("Joe$42", installHost.Settings.ServiceName);
         }
 
         [Test]
@@ -197,11 +198,11 @@ namespace Topshelf.Tests
                 x.ApplyCommandLine("install -servicename Joe -instance 42");
             });
 
-            Assert.IsInstanceOf<InstallHost>(host);
+            ClassicAssert.IsInstanceOf<InstallHost>(host);
             var installHost = (InstallHost)host;
-            Assert.AreEqual("Joe", installHost.Settings.Name);
-            Assert.AreEqual("42", installHost.Settings.InstanceName);
-            Assert.AreEqual("Joe$42", installHost.Settings.ServiceName);
+            ClassicAssert.AreEqual("Joe", installHost.Settings.Name);
+            ClassicAssert.AreEqual("42", installHost.Settings.InstanceName);
+            ClassicAssert.AreEqual("Joe$42", installHost.Settings.ServiceName);
         }
 
         [Test]
@@ -213,11 +214,11 @@ namespace Topshelf.Tests
                 x.ApplyCommandLine("install -servicename \"Joe's Service\" -instance \"42\"");
             });
 
-            Assert.IsInstanceOf<InstallHost>(host);
+            ClassicAssert.IsInstanceOf<InstallHost>(host);
             var installHost = (InstallHost)host;
-            Assert.AreEqual("Joe's Service", installHost.Settings.Name);
-            Assert.AreEqual("42", installHost.Settings.InstanceName);
-            Assert.AreEqual("Joe's Service$42", installHost.Settings.ServiceName);
+            ClassicAssert.AreEqual("Joe's Service", installHost.Settings.Name);
+            ClassicAssert.AreEqual("42", installHost.Settings.InstanceName);
+            ClassicAssert.AreEqual("Joe's Service$42", installHost.Settings.ServiceName);
         }
 
         [Test]
@@ -229,9 +230,9 @@ namespace Topshelf.Tests
                 x.ApplyCommandLine("install --autostart");
             });
 
-            Assert.IsInstanceOf<InstallHost>(host);
+            ClassicAssert.IsInstanceOf<InstallHost>(host);
             var installHost = (InstallHost)host;
-            Assert.AreEqual(HostStartMode.Automatic, installHost.InstallSettings.StartMode);
+            ClassicAssert.AreEqual(HostStartMode.Automatic, installHost.InstallSettings.StartMode);
         }
 
         [Test]
@@ -243,9 +244,9 @@ namespace Topshelf.Tests
                 x.ApplyCommandLine("install --manual");
             });
 
-            Assert.IsInstanceOf<InstallHost>(host);
+            ClassicAssert.IsInstanceOf<InstallHost>(host);
             var installHost = (InstallHost)host;
-            Assert.AreEqual(HostStartMode.Manual, installHost.InstallSettings.StartMode);
+            ClassicAssert.AreEqual(HostStartMode.Manual, installHost.InstallSettings.StartMode);
         }
 
         [Test]
@@ -257,9 +258,9 @@ namespace Topshelf.Tests
                 x.ApplyCommandLine("InstAll --ManuAl");
             });
 
-            Assert.IsInstanceOf<InstallHost>(host);
+            ClassicAssert.IsInstanceOf<InstallHost>(host);
             var installHost = (InstallHost)host;
-            Assert.AreEqual(HostStartMode.Manual, installHost.InstallSettings.StartMode);
+            ClassicAssert.AreEqual(HostStartMode.Manual, installHost.InstallSettings.StartMode);
         }
 
         [Test]
@@ -271,9 +272,9 @@ namespace Topshelf.Tests
                 x.ApplyCommandLine("install --disabled");
             });
 
-            Assert.IsInstanceOf<InstallHost>(host);
+            ClassicAssert.IsInstanceOf<InstallHost>(host);
             var installHost = (InstallHost)host;
-            Assert.AreEqual(HostStartMode.Disabled, installHost.InstallSettings.StartMode);
+            ClassicAssert.AreEqual(HostStartMode.Disabled, installHost.InstallSettings.StartMode);
         }
 
 #if !NET35
@@ -286,9 +287,9 @@ namespace Topshelf.Tests
                 x.ApplyCommandLine("install --delayed");
             });
 
-            Assert.IsInstanceOf<InstallHost>(host);
+            ClassicAssert.IsInstanceOf<InstallHost>(host);
             var installHost = (InstallHost)host;
-            Assert.AreEqual(HostStartMode.AutomaticDelayed, installHost.InstallSettings.StartMode);
+            ClassicAssert.AreEqual(HostStartMode.AutomaticDelayed, installHost.InstallSettings.StartMode);
         }
 #endif
         [Test]
@@ -300,7 +301,7 @@ namespace Topshelf.Tests
                 x.ApplyCommandLine("uninstall");
             });
 
-            Assert.IsInstanceOf<UninstallHost>(host);
+            ClassicAssert.IsInstanceOf<UninstallHost>(host);
         }
 
         [Test]
@@ -312,7 +313,7 @@ namespace Topshelf.Tests
                 x.ApplyCommandLine("start");
             });
 
-            Assert.IsInstanceOf<StartHost>(host);
+            ClassicAssert.IsInstanceOf<StartHost>(host);
         }
 
         [Test]
@@ -324,7 +325,7 @@ namespace Topshelf.Tests
                 x.ApplyCommandLine("stop");
             });
 
-            Assert.IsInstanceOf<StopHost>(host);
+            ClassicAssert.IsInstanceOf<StopHost>(host);
         }
 
         [Test]
@@ -341,7 +342,7 @@ namespace Topshelf.Tests
                     x.ApplyCommandLine("--superfly");
                 });
 
-            Assert.IsTrue(isSuperfly);
+            ClassicAssert.IsTrue(isSuperfly);
         }
 
         [Test]
@@ -358,7 +359,7 @@ namespace Topshelf.Tests
                     x.ApplyCommandLine("-password:abc123!@#=$%^&*()-+");
                 });
 
-            Assert.AreEqual("abc123!@#=$%^&*()-+", password);
+            ClassicAssert.AreEqual("abc123!@#=$%^&*()-+", password);
         }
 
         [Test]
@@ -375,7 +376,7 @@ namespace Topshelf.Tests
                     x.ApplyCommandLine("-password \"abc123=:,.<>/?;!@#$%^&*()-+\"");
                 });
 
-            Assert.AreEqual("abc123=:,.<>/?;!@#$%^&*()-+", password);
+            ClassicAssert.AreEqual("abc123=:,.<>/?;!@#$%^&*()-+", password);
         }
 
         [Test]
@@ -392,7 +393,7 @@ namespace Topshelf.Tests
                 x.ApplyCommandLine("-password abc123=:,.<>/?;!@#$%^&*()-+");
             });
 
-            Assert.AreEqual("abc123=:,.<>/?;!@#$%^&*()-+", password);
+            ClassicAssert.AreEqual("abc123=:,.<>/?;!@#$%^&*()-+", password);
         }
 
         [Test]
@@ -409,13 +410,13 @@ namespace Topshelf.Tests
                     x.ApplyCommandLine("-volumeLevel:11");
                 });
 
-            Assert.AreEqual("11", volumeLevel);
+            ClassicAssert.AreEqual("11", volumeLevel);
         }
 
         [Test]
         public void Should_require_password_option_when_specifying_username()
         {
-            Assert.Throws<Topshelf.HostConfigurationException>(() =>
+            ClassicAssert.Throws<Topshelf.HostConfigurationException>(() =>
             {
                 Host host = HostFactory.New(x =>
                 {
@@ -434,10 +435,10 @@ namespace Topshelf.Tests
                     x.ApplyCommandLine("install -username \"Joe\" -password \"\"");
                 });
 
-            Assert.IsInstanceOf<InstallHost>(host);
+            ClassicAssert.IsInstanceOf<InstallHost>(host);
             var installHost = (InstallHost)host;
-            Assert.AreEqual("Joe", installHost.InstallSettings.Credentials.Username);
-            Assert.AreEqual("", installHost.InstallSettings.Credentials.Password);
+            ClassicAssert.AreEqual("Joe", installHost.InstallSettings.Credentials.Username);
+            ClassicAssert.AreEqual("", installHost.InstallSettings.Credentials.Password);
         }
 
         class MyService : ServiceControl

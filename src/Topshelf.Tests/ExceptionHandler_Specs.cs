@@ -14,7 +14,7 @@ namespace Topshelf.Tests
 {
     using System;
     using NUnit.Framework;
-
+    using NUnit.Framework.Legacy;
 
     [TestFixture]
     public class Exception_callback
@@ -48,9 +48,9 @@ namespace Topshelf.Tests
                     });
                 });
 
-            Assert.IsTrue(sawExceptionInStart);
-            Assert.IsFalse(sawExceptionInStop);
-            Assert.AreEqual(TopshelfExitCode.ServiceControlRequestFailed, exitCode);
+            ClassicAssert.IsTrue(sawExceptionInStart);
+            ClassicAssert.IsFalse(sawExceptionInStop);
+            ClassicAssert.AreEqual(TopshelfExitCode.ServiceControlRequestFailed, exitCode);
         }
 
         [Test]
@@ -79,9 +79,9 @@ namespace Topshelf.Tests
                 });
             });
 
-            Assert.IsFalse(sawExceptionInStart);
-            Assert.IsTrue(sawExceptionInStop);
-            Assert.AreEqual(TopshelfExitCode.ServiceControlRequestFailed, exitCode);
+            ClassicAssert.IsFalse(sawExceptionInStart);
+            ClassicAssert.IsTrue(sawExceptionInStop);
+            ClassicAssert.AreEqual(TopshelfExitCode.ServiceControlRequestFailed, exitCode);
         }
 
         [Test]
@@ -101,8 +101,8 @@ namespace Topshelf.Tests
                 });
             });
 
-            Assert.IsFalse(sawException);
-            Assert.AreEqual(TopshelfExitCode.Ok, exitCode);
+            ClassicAssert.IsFalse(sawException);
+            ClassicAssert.AreEqual(TopshelfExitCode.Ok, exitCode);
         }
 
         [Test]
@@ -115,7 +115,7 @@ namespace Topshelf.Tests
                 x.Service(settings => new ExceptionThrowingService(true, false));
             });
 
-            Assert.AreEqual(TopshelfExitCode.ServiceControlRequestFailed, exitCode);
+            ClassicAssert.AreEqual(TopshelfExitCode.ServiceControlRequestFailed, exitCode);
 
             exitCode = HostFactory.Run(x =>
             {
@@ -124,7 +124,7 @@ namespace Topshelf.Tests
                 x.Service(settings => new ExceptionThrowingService(false, true));
             });
 
-            Assert.AreEqual(TopshelfExitCode.ServiceControlRequestFailed, exitCode);
+            ClassicAssert.AreEqual(TopshelfExitCode.ServiceControlRequestFailed, exitCode);
 
         }
 
@@ -142,8 +142,8 @@ namespace Topshelf.Tests
                 x.OnException(_ => sawException = true);
             });
 
-            Assert.IsTrue(sawException);
-            Assert.AreEqual(TopshelfExitCode.AbnormalExit, exitCode);
+            ClassicAssert.IsTrue(sawException);
+            ClassicAssert.AreEqual(TopshelfExitCode.AbnormalExit, exitCode);
         }
 
         [Test]
@@ -165,8 +165,8 @@ namespace Topshelf.Tests
                 x.OnException(_ => sawException = true);
             });
 
-            Assert.IsTrue(sawException);
-            Assert.AreEqual(TopshelfExitCode.AbnormalExit, exitCode);
+            ClassicAssert.IsTrue(sawException);
+            ClassicAssert.AreEqual(TopshelfExitCode.AbnormalExit, exitCode);
         }
 
         class ServiceThrowingExceptionInConstructor : ServiceControl
